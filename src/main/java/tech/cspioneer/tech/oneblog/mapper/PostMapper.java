@@ -11,8 +11,12 @@ import java.util.List;
 public interface PostMapper {
     @Insert("INSERT INTO post(title,content,type,post_excerpt,post_status)VALUES (#{title},#{content},#{type},#{postExcerpt},#{postStatus})")
     int addPost(PostDTO postdto);
+    @Insert("INSERT INTO post_html(title,content,type,post_excerpt,post_status)VALUES (#{title},#{content},#{type},#{postExcerpt},#{postStatus})")
+    int addPostHtml(PostDTO postdto);
+
     @Delete("DELETE FROM post WHERE id = #{postId}")
     int deletePost(int postId);
+
     @Select("SELECT * FROM post WHERE id = #{postId}")
     @Results({
         @Result(column = "post_date", property = "postDate"),
@@ -22,6 +26,16 @@ public interface PostMapper {
         @Result(column = "id",property = "postId")
     })
     PostDTO getPost(int postId);
+
+    @Select("SELECT * FROM post_html WHERE id = #{postId}")
+    @Results({
+        @Result(column = "post_date", property = "postDate"),
+        @Result(column = "latest_update_time", property = "latestUpdateTime"),
+        @Result(column = "post_status", property = "postStatus"),
+        @Result(column="post_excerpt",property = "postExcerpt"),
+        @Result(column = "id",property = "postId")
+    })
+    PostDTO getPostHtml(int postId);
 
     @Select("SELECT id,title, post_excerpt,post_date,latest_update_date FROM post")
     @Results({

@@ -10,6 +10,6 @@ public interface PostService {
     int deletePost(PostDTO postDTO);
     PostDTO getPost(PostDTO postDTO);
     int updatePost(PostDTO postDTO);
-
+    PostDTO getPostHtml(int postId);
     List<PostListDTO> getPostList();
 }

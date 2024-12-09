@@ -6,6 +6,7 @@ import tech.cspioneer.tech.oneblog.DTO.PostDTO;
 import tech.cspioneer.tech.oneblog.DTO.PostListDTO;
 import tech.cspioneer.tech.oneblog.mapper.PostMapper;
 import tech.cspioneer.tech.oneblog.service.PostService;
+import tech.cspioneer.tech.oneblog.utils.MarkdownToHtmlUtil;
 
 import java.util.List;
 
@@ -16,6 +17,9 @@ public class PostServiceImp implements PostService {
     @Override
     public int addPost(PostDTO postdto) {
        postMapper.addPost(postdto);
+      String html = MarkdownToHtmlUtil.convertMarkdownToHtml(postdto.getContent());
+      postdto.setContent(html);
+      postMapper.addPostHtml(postdto);
         return 1;
     }
     @Override
@@ -27,11 +31,19 @@ public class PostServiceImp implements PostService {
     public PostDTO getPost(PostDTO postdto) {
         return postMapper.getPost(postdto.getPostId());
     }
+
+    @Override
+    public PostDTO getPostHtml(int postId) {
+        return postMapper.getPostHtml(postId);
+    }
+
+
     @Override
     public int updatePost(PostDTO postdto) {
         postMapper.updatePost(postdto);
         return 1;
     }
+
     @Override
     public List<PostListDTO> getPostList() {
         return postMapper.getPostList();
